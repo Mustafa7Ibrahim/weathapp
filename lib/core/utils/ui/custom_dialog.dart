@@ -36,7 +36,7 @@ Future<bool?> customDialog({
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
-                  ?.copyWith(height: 1.4, color: AppColor.editProfileTextColor),
+                  ?.copyWith(height: 1.4, color: AppColor.backgroundColor),
               textAlign: TextAlign.center,
             ),
             designPadding12.ph,
@@ -46,8 +46,9 @@ Future<bool?> customDialog({
                   child: ElevatedButton(
                     onPressed: onOk,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          isPrimary ? AppColor.primaryColor : AppColor.redColor,
+                      backgroundColor: isPrimary
+                          ? AppColor.primaryColor
+                          : AppColor.backgroundColor,
                     ),
                     child: Text(okText),
                   ),
@@ -60,7 +61,7 @@ Future<bool?> customDialog({
                         Navigator.of(context).pop();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColor.editProfileTextColor,
+                        backgroundColor: AppColor.backgroundColor,
                       ),
                       child: const Text("Cancel"),
                     ),

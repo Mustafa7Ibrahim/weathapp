@@ -48,12 +48,14 @@ Future<(Failure?, Position?)> determinePosition() async {
   }
 
   if (permission == LocationPermission.deniedForever) {
+    router.canPop();
     // Permissions are denied forever, handle appropriately.
     await customDialogWithReturn(
       title: 'Location services are disabled.',
       message: 'Please enable location permeation to located the'
           ' nearest pharmacies to you.',
       onOk: () async {
+        router.canPop();
         final r = await Geolocator.openAppSettings();
         log('r: $r');
         if (r) {
@@ -77,11 +79,12 @@ Future<void> customDialogWithReturn({
   required String okText,
 }) {
   return showDialog<void>(
+    barrierDismissible: false,
     context: globalContext!,
     builder: (context) {
       return AlertDialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(designRadius8),
+          borderRadius: BorderRadius.circular(designRadius18),
         ),
         title: Text(
           title,
@@ -99,7 +102,7 @@ Future<void> customDialogWithReturn({
                     height: 1.4,
                   ),
             ),
-            designPadding.ph,
+            designPadding24.ph,
             ElevatedButton(
               onPressed: () => onOk(),
               child: Text(okText),

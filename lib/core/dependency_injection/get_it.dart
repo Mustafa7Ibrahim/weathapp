@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:weathapp/core/utils/dio/dio_helper.dart';
+import 'package:weathapp/modules/home/bloc/weather_bloc.dart';
+import 'package:weathapp/modules/home/repository/home_repository.dart';
 
 /// GetIt is a simple service locator for Dart and Flutter projects. [GetIt]
 final gi = GetIt.instance;
@@ -18,11 +20,13 @@ Future<void> initGetIt() async {
   // );
 
   gi
-      // helpers
+    // helpers
 
-      // blocs
+    // blocs
+    ..registerFactory(() => WeatherBloc(gi()))
 
-      // data ( local + remote) repositories Objects
-      .registerLazySingleton<Dio>(() => DioHelper(Dio()).init());
+    // data ( local + remote) repositories Objects
+    ..registerLazySingleton(() => HomeRepository(dio: gi()))
+    ..registerLazySingleton<Dio>(() => DioHelper(Dio()).init());
   // ..registerLazySingleton<Isar>(() => isar);
 }

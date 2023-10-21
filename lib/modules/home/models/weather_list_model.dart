@@ -191,9 +191,7 @@ class ListElement extends Equatable {
 class Sys extends Equatable {
   final String? pod;
 
-  Sys({
-    required this.pod,
-  });
+  const Sys({required this.pod});
 
   Sys copyWith({
     String? pod,

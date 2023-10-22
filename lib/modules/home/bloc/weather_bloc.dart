@@ -14,9 +14,6 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         switch (event) {
           case GetWeatherEvent():
             await _getWeather(emit, event);
-
-          case GetWeatherListEvent():
-            await _getWeatherList(emit, event);
         }
       },
     );
@@ -49,44 +46,24 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       city: event.city,
     );
 
-    if (fail != null) {
-      emit(state.copyWith(status: WeatherStatus.failure, error: fail.message));
-    } else {
-      emit(state.copyWith(status: WeatherStatus.success, weather: weather));
-    }
-  }
-
-  Future<void> _getWeatherList(
-    Emitter<WeatherState> emit,
-    GetWeatherListEvent event,
-  ) async {
-    double? lat = event.lat;
-    double? lon = event.lon;
-    emit(state.copyWith(status: WeatherStatus.loading));
-    if (event.needLocation) {
-      final (fail, pos) = await determinePosition();
-      if (fail != null) {
-        emit(
-          state.copyWith(status: WeatherStatus.failure, error: fail.message),
-        );
-        return;
-      } else {
-        lat = pos!.latitude;
-        lon = pos.longitude;
-      }
-    }
-    final (fail, weatherList) = await homeRepository.getWeatherFor5Days(
+    final (fail2, weatherList) = await homeRepository.getWeatherFor5Days(
       lat: lat,
       lon: lon,
       city: event.city,
     );
 
-    if (fail != null) {
-      emit(state.copyWith(status: WeatherStatus.failure, error: fail.message));
+    if (fail != null || fail2 != null) {
+      emit(
+        state.copyWith(
+          status: WeatherStatus.failure,
+          error: fail == null ? fail?.message : fail2!.message,
+        ),
+      );
     } else {
       emit(
         state.copyWith(
           status: WeatherStatus.success,
+          weather: weather,
           weatherList: WeatherListModel.filterUniqueDates(
             weatherList?.list ?? [],
           ),

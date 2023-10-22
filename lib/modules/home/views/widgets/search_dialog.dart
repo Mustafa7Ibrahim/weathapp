@@ -43,9 +43,10 @@ class SearchDialog extends StatelessWidget {
         textAlign: TextAlign.center,
         textInputAction: TextInputAction.done,
         onSubmitted: (value) {
-          ctx.read<WeatherBloc>()
-            ..add(GetWeatherEvent(city: value, needLocation: false))
-            ..add(GetWeatherListEvent(city: value, needLocation: false));
+          ctx
+              .read<WeatherBloc>()
+              .add(GetWeatherEvent(city: value, needLocation: false));
+
           Navigator.pop(context);
         },
       ),

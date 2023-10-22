@@ -54,7 +54,7 @@ class AppTheme {
             padding: const EdgeInsets.all(12),
             shadowColor: const Color(0xff6C5DD3),
             elevation: 4,
-            foregroundColor: Colors.white,
+            foregroundColor: AppColor.backgroundColor,
             minimumSize: Size(width, 55),
             maximumSize: Size(width, 56),
             disabledForegroundColor: Colors.white,

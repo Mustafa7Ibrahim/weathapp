@@ -17,8 +17,8 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: SafeArea(
         child: Column(
           children: [
             Container(
@@ -38,22 +38,24 @@ class HomeWidget extends StatelessWidget {
                         IconButton(
                           icon: const Icon(Icons.location_on_outlined),
                           onPressed: () async {
-                            context.read<WeatherBloc>()
-                              ..add(GetWeatherEvent())
-                              ..add(GetWeatherListEvent());
+                            context.read<WeatherBloc>().add(GetWeatherEvent());
                           },
                         ),
-                        const Spacer(),
-                        Text(
-                          state.weather?.name ?? 'City',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium
-                              ?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColor.primaryColor),
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              state.weather?.name ?? '',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColor.primaryColor),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                         ),
-                        const Spacer(),
                         IconButton(
                           icon: const Icon(Icons.search_rounded),
                           onPressed: () {
